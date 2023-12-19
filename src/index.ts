@@ -1,6 +1,6 @@
-const { Client } = require("discord.js");
-const { CommandKit } = require("commandkit");
-require("dotenv/config");
+import { Client } from "discord.js";
+import { CommandKit } from "commandkit";
+import "dotenv/config"
 
 const client = new Client({
     intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
