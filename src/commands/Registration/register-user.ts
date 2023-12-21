@@ -1,8 +1,8 @@
-const { SlashCommandBuilder } = require("discord.js");
-const RegisterConfig = require("../../models/RegisterConfig");
+import { SlashCommandBuilder } from "discord.js";
+import RegisterConfig from "../../models/RegisterConfig";
+import { SlashCommandProps } from 'commandkit';
 
-/**@param {import('commandkit').SlashCommandProps} param0 */
-async function run({ interaction }) {
+async function run({ interaction }: SlashCommandProps) {
     try {
         await interaction.deferReply({ ephemeral: true });
         const token = interaction.options.getString("token");
@@ -22,9 +22,9 @@ async function run({ interaction }) {
             const member = interaction.member;
             const channelPermission = user.channel;
             const guild = interaction.guild;
-            const roles = guild.roles;
-            const role = roles.cache.find((r) => r.name === channelPermission);
-            member.roles
+            const roles = guild?.roles;
+            const role = roles?.cache.find((r) => r.name === channelPermission);
+            member?.roles
                 .add(role)
                 .then(() => {
                     interaction.followUp(

@@ -1,12 +1,8 @@
-const {
-    SlashCommandBuilder,
-    PermissionFlagsBits,
-    ChannelType,
-} = require("discord.js");
-const NotificationConfig = require("../../models/NotificationConfig");
+import { SlashCommandBuilder, PermissionFlagsBits, ChannelType } from "discord.js";
+import NotificationConfig from "../../models/NotificationConfig";
+import { SlashCommandProps } from 'commandkit';
 
-/**@param {import('commandkit').SlashCommandProps} param0 */
-async function run({ interaction }) {
+async function run({ interaction }: SlashCommandProps) {
     try {
         await interaction.deferReply({ ephemeral: true });
         const targetYtChannelId = interaction.options.getString("youtube-id");
@@ -15,7 +11,7 @@ async function run({ interaction }) {
 
         const targetChannel = await NotificationConfig.findOne({
             ytChannelId: targetYtChannelId,
-            notificationChannelId: targetNotificationChannel.id,
+            notificationChannelId: targetNotificationChannel?.id,
         });
 
         if (!targetChannel) {
@@ -23,7 +19,7 @@ async function run({ interaction }) {
                 "That Youtube channel has not been configured for notifications.",
             );
         }
-        NotificationConfig.findOneAndDelete({ _id: targetChannel._id })
+        NotificationConfig.findOneAndDelete({ _id: targetChannel?._id })
             .then(() => {
                 interaction.followUp("Turned off notifications for that channel!");
             })

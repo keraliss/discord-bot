@@ -1,15 +1,11 @@
-const {
-    SlashCommandBuilder,
-    PermissionFlagsBits,
-    ChannelType,
-    EmbedBuilder,
-} = require("discord.js");
-const NotificationConfig = require("../../models/NotificationConfig");
-const Parser = require("rss-parser");
+import { SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder } from "discord.js";
+import NotificationConfig from "../../models/NotificationConfig";
+import Parser from "rss-parser";
+import { SlashCommandProps } from 'commandkit';
 
 const parser = new Parser();
-/**@param {import('commandkit').SlashCommandProps} param0 */
-async function run({ interaction }) {
+
+async function run({ interaction }: SlashCommandProps) {
     try {
         await interaction.deferReply({ ephemeral: true });
         const targetYtChannelId = interaction.options.getString("youtube-id");
@@ -17,7 +13,7 @@ async function run({ interaction }) {
             interaction.options.getChannel("target-channel");
         const targetCustomMessage = interaction.options.getString("custom-message");
         const duplicateExists = await NotificationConfig.exists({
-            notificationChannelId: targetNotificationChannel.id,
+            notificationChannelId: targetNotificationChannel?.id,
             ytChannelId: targetYtChannelId,
         });
         if (duplicateExists) {
@@ -37,7 +33,7 @@ async function run({ interaction }) {
         const channelName = feed.title;
         const notificationConfig = new NotificationConfig({
             guildId: interaction.guildId,
-            notificationChannelId: targetNotificationChannel.id,
+            notificationChannelId: targetNotificationChannel?.id,
             ytChannelId: targetYtChannelId,
             customMessage: targetCustomMessage,
             lastChecked: new Date(),

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const registerConfigSchema = mongoose.Schema(
+const registerConfigSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -15,7 +15,8 @@ const registerConfigSchema = mongoose.Schema(
             type: String,
         },
     },
-    { timestamp: true },
+    { timestamps: true },
 );
 
-module.exports = mongoose.model("RegisterConfig", registerConfigSchema);
+const RegisterConfig = mongoose.model("RegisterConfig", registerConfigSchema);
+export default RegisterConfig;
