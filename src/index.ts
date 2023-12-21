@@ -1,11 +1,13 @@
 import { Client } from "discord.js";
 import { CommandKit } from "commandkit";
-import { default as mongoose } from "mongoose";
-require("dotenv/config");
+import mongoose from "mongoose";
+import { configDotenv } from "dotenv";
 
 const client = new Client({
     intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent",],
 });
+
+configDotenv();
 
 new CommandKit({
     client,
@@ -17,13 +19,13 @@ new CommandKit({
 });
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const APP_TOKEN = process.env.APP_TOKEN;
+const TOKEN = process.env.TOKEN;
 
-if (!MONGODB_URI || !APP_TOKEN) {
+if (!MONGODB_URI || !TOKEN) {
     throw new Error('Missing environment variables')
 }
 
 mongoose.connect(MONGODB_URI).then(() => {
     console.log("Connected to database.");
-    client.login(APP_TOKEN);
+    client.login(TOKEN);
 });

@@ -1,17 +1,15 @@
-import { CommandInteraction, Client } from "discord.js";
-import { CommandData, CommandOptions } from "commandkit";
+import { CommandData, CommandOptions, SlashCommandProps } from "commandkit";
 
-const data: CommandData = {
+export const data: CommandData = {
     name: "ping",
     description: "Pong!",
 };
 
-function run({ interaction, client }: { interaction: CommandInteraction; client: Client }) {
+export function run({ interaction, client }: SlashCommandProps): void {
     interaction.reply(`:ping_pong: Pong! ${client.ws.ping}ms`);
 }
 
-const options: CommandOptions = {
+export const options: CommandOptions = {
     devOnly: true,
 };
 
-module.exports = { data, run, options };

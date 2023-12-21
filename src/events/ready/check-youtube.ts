@@ -4,7 +4,7 @@ import { Client } from "discord.js";
 
 const parser = new Parser();
 
-module.exports = (client: Client) => {
+export default function (client: Client) {
     setInterval(checkYoutube, 60000 * 5);
     async function checkYoutube() {
         try {
@@ -12,9 +12,7 @@ module.exports = (client: Client) => {
             notificationConfigs.map(
                 async (notificationConfig) => {
                     const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/video.xml?channel_id=${notificationConfig.ytChannelId}`;
-                    const feed = await parser
-                        .parseURL(YOUTUBE_RSS_URL)
-                        .catch(() => {});
+                    const feed = await parser.parseURL(YOUTUBE_RSS_URL).catch(() => {});
                     if (!feed?.items.length) {
                         return;
                     }
@@ -43,7 +41,7 @@ module.exports = (client: Client) => {
                             (await targetGuild.channels.fetch(
                                 notificationConfig.notificationChannelId,
                             ));
-                        if (!targetChannel) {
+                        if (!targetChannel || !targetChannel.isTextBased()) {
                             await NotificationConfig.findOneAndDelete({
                                 _id: notificationConfig._id,
                             });
@@ -60,8 +58,8 @@ module.exports = (client: Client) => {
                                     notificationConfig.customMessage
                                         ?.replace("{VIDEO_URL}", latestVideo.link)
                                         ?.replace("{VIDEO_TITLE}", latestVideo.title)
-                                        ?.replace("{CHANNEL_URL}", feed.link)
-                                        ?.replace("{CHANNEL_NAME}", feed.title) ||
+                                        ?.replace("{CHANNEL_URL}", feed.link || '')
+                                        ?.replace("{CHANNEL_NAME}", feed.title || '') ||
                                     `New upload by ${feed.title}\n${latestVideo.link}`;
                                 targetChannel.send(targetMessage);
                             })

@@ -2,7 +2,7 @@ import { SlashCommandBuilder, PermissionFlagsBits, ChannelType } from "discord.j
 import NotificationConfig from "../../models/NotificationConfig";
 import { SlashCommandProps } from 'commandkit';
 
-async function run({ interaction }: SlashCommandProps) {
+export async function run({ interaction }: SlashCommandProps):Promise<void> {
     try {
         await interaction.deferReply({ ephemeral: true });
         const targetYtChannelId = interaction.options.getString("youtube-id");
@@ -33,7 +33,7 @@ async function run({ interaction }: SlashCommandProps) {
     }
 }
 
-const data = new SlashCommandBuilder()
+export const data = new SlashCommandBuilder()
     .setName("notification-remove")
     .setDescription("Turn off Youtube notifications for a channel.")
     .setDMPermission(false)
@@ -51,4 +51,3 @@ const data = new SlashCommandBuilder()
             .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
             .setRequired(true),
     );
-module.exports = { data, run };

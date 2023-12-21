@@ -5,7 +5,7 @@ import { SlashCommandProps } from 'commandkit';
 
 const parser = new Parser();
 
-async function run({ interaction }: SlashCommandProps) {
+export async function run({ interaction }: SlashCommandProps): Promise<void> {
     try {
         await interaction.deferReply({ ephemeral: true });
         const targetYtChannelId = interaction.options.getString("youtube-id");
@@ -42,9 +42,11 @@ async function run({ interaction }: SlashCommandProps) {
 
         if (feed.items.length) {
             const latestVideo = feed.items[0];
+            const pubDate = latestVideo.pubDate ? new Date(latestVideo.pubDate) : new Date();
+
             notificationConfig.lastCheckedVid = {
                 id: latestVideo.id.split(":")[2],
-                pubDate: latestVideo.pubDate,
+                pubDate,
             };
         }
         notificationConfig
@@ -68,7 +70,7 @@ async function run({ interaction }: SlashCommandProps) {
     }
 }
 
-const data = new SlashCommandBuilder()
+export const data = new SlashCommandBuilder()
     .setName("notification-setup")
     .setDescription("Setup Youtube notifications for a channel")
     .setDMPermission(false)
@@ -93,5 +95,3 @@ const data = new SlashCommandBuilder()
                 "Templates:{VIDEO_TITLE} {VIDEO_URL} {CHANNEL_NAME} {CHANNEL_URL",
             ),
     );
-
-module.exports = { data, run };

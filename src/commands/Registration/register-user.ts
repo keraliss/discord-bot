@@ -1,8 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
+import { GuildMember, SlashCommandBuilder } from "discord.js";
 import RegisterConfig from "../../models/RegisterConfig";
 import { SlashCommandProps } from 'commandkit';
 
-async function run({ interaction }: SlashCommandProps) {
+export async function run({ interaction }: SlashCommandProps) {
     try {
         await interaction.deferReply({ ephemeral: true });
         const token = interaction.options.getString("token");
@@ -20,10 +20,20 @@ async function run({ interaction }: SlashCommandProps) {
             user.enrolled = false;
             await user.save();
             const member = interaction.member;
+
+            if (!member || !(member instanceof GuildMember)) {
+                return;
+            }
+
             const channelPermission = user.channel;
             const guild = interaction.guild;
             const roles = guild?.roles;
             const role = roles?.cache.find((r) => r.name === channelPermission);
+
+            if (!role) {
+                return;
+            }
+
             member?.roles
                 .add(role)
                 .then(() => {
@@ -45,7 +55,7 @@ async function run({ interaction }: SlashCommandProps) {
     }
 }
 
-const data = new SlashCommandBuilder()
+export const data = new SlashCommandBuilder()
     .setName("register")
     .setDescription("Registering user based on token")
     .setDMPermission(false)
@@ -55,4 +65,4 @@ const data = new SlashCommandBuilder()
             .setDescription("Registration token")
             .setRequired(true),
     );
-module.exports = { data, run };
+
