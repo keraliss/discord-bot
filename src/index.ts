@@ -3,8 +3,8 @@ import { CommandKit } from "commandkit";
 import mongoose from "mongoose";
 import { configDotenv } from "dotenv";
 
-const client = new Client({
-    intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent",],
+export const client = new Client({
+    intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent", "GuildScheduledEvents"],
 });
 
 configDotenv();
