@@ -1,6 +1,6 @@
 import { GuildMember, SlashCommandBuilder } from "discord.js";
 import RegisterConfig from "../../models/RegisterConfig";
-import { SlashCommandProps } from 'commandkit';
+import { SlashCommandProps } from "commandkit";
 
 export async function run({ interaction }: SlashCommandProps) {
     try {
@@ -14,10 +14,10 @@ export async function run({ interaction }: SlashCommandProps) {
             return;
         } else if (user.enrolled) {
             interaction.followUp(
-                `You have already enrolled to the channel:${user.channel}`,
+                `You have already enrolled to the channel:${user.role}`,
             );
         } else {
-            user.enrolled = false;
+            user.enrolled = true;
             await user.save();
             const member = interaction.member;
 
@@ -25,7 +25,7 @@ export async function run({ interaction }: SlashCommandProps) {
                 return;
             }
 
-            const channelPermission = user.channel;
+            const channelPermission = user.role;
             const guild = interaction.guild;
             const roles = guild?.roles;
             const role = roles?.cache.find((r) => r.name === channelPermission);
@@ -33,7 +33,6 @@ export async function run({ interaction }: SlashCommandProps) {
             if (!role) {
                 return;
             }
-
             member?.roles
                 .add(role)
                 .then(() => {
@@ -65,4 +64,3 @@ export const data = new SlashCommandBuilder()
             .setDescription("Registration token")
             .setRequired(true),
     );
-
