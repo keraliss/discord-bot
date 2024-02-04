@@ -5,10 +5,12 @@ import { configDotenv } from "dotenv";
 import express, { json, urlencoded } from "express";
 import apiRoutes from "./routes";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
+app.use(cors());
 app.use("/api", apiRoutes);
 
 export const client = new Client({
