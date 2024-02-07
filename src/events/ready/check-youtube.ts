@@ -5,7 +5,7 @@ import { Client } from "discord.js";
 const parser = new Parser();
 
 export default function (client: Client) {
-    setTimeout(checkYoutube, 60000 * 5);
+    setInterval(checkYoutube, 60000 * 5);
     async function checkYoutube() {
         try {
             const notificationConfigs = await NotificationConfig.find();
@@ -19,6 +19,7 @@ export default function (client: Client) {
                         return;
                     }
                     const latestVideo = feed.items[0];
+                    console.log(latestVideo);
                     const lastCheckedVid = notificationConfig.lastCheckedVid;
                     if (
                         !lastCheckedVid ||
