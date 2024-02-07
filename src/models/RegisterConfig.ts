@@ -1,26 +1,65 @@
 import mongoose from "mongoose";
 import email from "../service/email-config";
 
-const registerConfigSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-        },
-        token: {
-            type: String,
-        },
-        enrolled: {
-            type: Boolean,
-        },
-        role: {
-            type: String,
-        },
-        email: {
-            type: String,
-        },
+const registerConfigSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        default: '' 
     },
-    { timestamps: true },
-);
+    token: {
+        type: String,
+        required:true
+    },
+    enrolled: {
+        type: Boolean,
+        default: false 
+    },
+    role: {
+        type: String,
+        required:true
+    },
+    email: {
+        type: String,
+        required:true
+    },
+    background: {
+        type: String,
+        default: '' 
+    },
+    work: {
+        type: String,
+        default: ''
+    },
+    year: {
+        type: String,
+        default: ''
+    },
+    readMB: {
+        type: String,
+        default: ''
+    },
+    why: {
+        type: String,
+        default: ''
+    },
+    expectation: {
+        type: String,
+        default: ''
+    },
+    time: {
+        type: String,
+        default: '' 
+    },
+    bitcoinCrypto: {
+        type: String,
+        default: '' 
+    },
+    location: {
+        type: String,
+        default: ''
+    }
+}, { timestamps: true });
+
 
 registerConfigSchema.post("save", async function (doc, next) {
     try {
