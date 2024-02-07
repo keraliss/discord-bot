@@ -5,20 +5,21 @@ import { Client } from "discord.js";
 const parser = new Parser();
 
 export default function (client: Client) {
-    setInterval(checkYoutube, 60000 * 5);
+    setTimeout(checkYoutube, 60000 * 5);
     async function checkYoutube() {
         try {
             const notificationConfigs = await NotificationConfig.find();
             notificationConfigs.map(
                 async (notificationConfig) => {
-                    const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/video.xml?channel_id=${notificationConfig.ytChannelId}`;
-                    const feed = await parser.parseURL(YOUTUBE_RSS_URL).catch(() => {});
+                    const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${notificationConfig.ytChannelId}`;
+                    const feed:any = await parser.parseURL(YOUTUBE_RSS_URL).catch((error) => {
+                        console.log(error);
+                    });
                     if (!feed?.items.length) {
                         return;
                     }
-                    const latestVideo = feed.itemsp[0];
+                    const latestVideo = feed.items[0];
                     const lastCheckedVid = notificationConfig.lastCheckedVid;
-
                     if (
                         !lastCheckedVid ||
                         (latestVideo.id.split(":")[2] !== lastCheckedVid.id &&

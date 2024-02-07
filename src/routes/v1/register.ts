@@ -1,27 +1,19 @@
 import { randomUUID } from "crypto";
 import express from "express";
 import RegisterConfig from "../../models/RegisterConfig";
-import email from "../../service/email-config";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
     try {
-        const { name, email, role } = req.body;
         const token = randomUUID();
-        const enrolled = false;
+        let email = req.body.email;
         const user = await RegisterConfig.findOne({ email });
         if (user) {
             console.log("User already exists");
             res.json({ message: "User already present" });
         } else {
-            const newUser = new RegisterConfig({
-                name,
-                enrolled,
-                email,
-                role,
-                token,
-            });
+            const newUser = new RegisterConfig({...req.body,token});
             newUser
                 .save()
                 .then((savedUser) => {
