@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
             res.json({ message: "User added successfully" });
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.json({ message: "Error" });
     }
 });

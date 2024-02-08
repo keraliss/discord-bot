@@ -13,13 +13,12 @@ export default function (client: Client) {
                 async (notificationConfig) => {
                     const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${notificationConfig.ytChannelId}`;
                     const feed:any = await parser.parseURL(YOUTUBE_RSS_URL).catch((error) => {
-                        console.log(error);
+                        console.error(error);
                     });
                     if (!feed?.items.length) {
                         return;
                     }
                     const latestVideo = feed.items[0];
-                    console.log(latestVideo);
                     const lastCheckedVid = notificationConfig.lastCheckedVid;
                     if (
                         !lastCheckedVid ||
@@ -70,7 +69,7 @@ export default function (client: Client) {
                 },
             );
         } catch (error) {
-            console.log(`Error in ${__filename}:\n`, error);
+            console.error(`Error in ${__filename}:\n`, error);
         }
     }
 };

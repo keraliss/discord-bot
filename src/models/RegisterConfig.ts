@@ -117,7 +117,7 @@ registerConfigSchema.post("save", async function (doc, next) {
                 `,
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
     next();
 });
