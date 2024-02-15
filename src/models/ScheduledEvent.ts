@@ -18,6 +18,12 @@ const scheduledEventSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+        recurrence: {
+            type: String,
+            required: true,
+            enum: ["daily", "weekly", "monthly", "none"],
+            default: "none",
+        },
     },
     { timestamps: true },
 );

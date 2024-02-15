@@ -1,68 +1,71 @@
 import mongoose from "mongoose";
 import email from "../service/email-config";
 
-const registerConfigSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        default: '' 
+const registerConfigSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            default: "",
+        },
+        token: {
+            type: String,
+            required: true,
+        },
+        enrolled: {
+            type: Boolean,
+            default: false,
+        },
+        role: {
+            type: String,
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        background: {
+            type: String,
+            default: "",
+        },
+        work: {
+            type: String,
+            default: "",
+        },
+        year: {
+            type: String,
+            default: "",
+        },
+        readMB: {
+            type: String,
+            default: "",
+        },
+        why: {
+            type: String,
+            default: "",
+        },
+        expectation: {
+            type: String,
+            default: "",
+        },
+        time: {
+            type: String,
+            default: "",
+        },
+        bitcoinCrypto: {
+            type: String,
+            default: "",
+        },
+        location: {
+            type: String,
+            default: "",
+        },
     },
-    token: {
-        type: String,
-        required:true
-    },
-    enrolled: {
-        type: Boolean,
-        default: false 
-    },
-    role: {
-        type: String,
-        required:true
-    },
-    email: {
-        type: String,
-        required:true
-    },
-    background: {
-        type: String,
-        default: '' 
-    },
-    work: {
-        type: String,
-        default: ''
-    },
-    year: {
-        type: String,
-        default: ''
-    },
-    readMB: {
-        type: String,
-        default: ''
-    },
-    why: {
-        type: String,
-        default: ''
-    },
-    expectation: {
-        type: String,
-        default: ''
-    },
-    time: {
-        type: String,
-        default: '' 
-    },
-    bitcoinCrypto: {
-        type: String,
-        default: '' 
-    },
-    location: {
-        type: String,
-        default: ''
-    }
-}, { timestamps: true });
-
+    { timestamps: true },
+);
 
 registerConfigSchema.post("save", async function (doc, next) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await email.sendMail({
             from: process.env.GMAIL_EMAIL,
             to: doc.email || process.env.GMAIL_EMAIL,

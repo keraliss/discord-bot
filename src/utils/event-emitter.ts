@@ -1,0 +1,6 @@
+import EventEmitter from "events";
+export const systemEventEmitter = new EventEmitter();
+
+export const SystemEvents = {
+    GuildEventCreated: "guild-event-created",
+};

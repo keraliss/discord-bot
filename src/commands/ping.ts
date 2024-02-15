@@ -12,4 +12,3 @@ export function run({ interaction, client }: SlashCommandProps): void {
 export const options: CommandOptions = {
     devOnly: true,
 };
-
