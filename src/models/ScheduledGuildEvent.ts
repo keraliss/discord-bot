@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const scheduledEventSchema = new mongoose.Schema(
+const scheduledGuildEventSchema = new mongoose.Schema(
     {
         eventId: {
             type: String,
@@ -28,5 +28,8 @@ const scheduledEventSchema = new mongoose.Schema(
     { timestamps: true },
 );
 
-const ScheduledEvent = mongoose.model("ScheduledEvent", scheduledEventSchema);
-export default ScheduledEvent;
+const ScheduledGuildEvent = mongoose.model(
+    "ScheduledGuildEvent",
+    scheduledGuildEventSchema,
+);
+export default ScheduledGuildEvent;

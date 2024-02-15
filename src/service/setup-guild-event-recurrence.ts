@@ -1,7 +1,12 @@
 import { client } from "..";
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 
-export async function setupGuildEventOccurrence({ eventId, eventName, creatorId }) {
+export async function setupGuildEventRecurrence({
+    eventId,
+    eventName,
+    creatorId,
+    isUpdatedEvent = false,
+}) {
     try {
         const user = await client.users.fetch(creatorId);
         const channel = await user.createDM();
@@ -31,12 +36,15 @@ export async function setupGuildEventOccurrence({ eventId, eventName, creatorId 
                     ]),
             );
 
+        const messageContent = isUpdatedEvent
+            ? `You have updated the event: "${eventName}". Do you want to update its recurrence? Ignore if not applicable.\n`
+            : `You have created a new event: "${eventName}".\n` +
+              "How often does this event repeat?";
+
         await channel.send({
-            content: `How often does this event "${eventName}" repeat?`,
+            content: messageContent,
             components: [selectMenu],
         });
-
-        // Listening for the user's selection will be handled elsewhere, typically in your interactionCreate event listener
     } catch (error) {
         console.error("Failed to send recurrence setup message:", error);
     }

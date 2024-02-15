@@ -1,6 +1,6 @@
 import { GuildScheduledEvent } from "discord.js";
-import ScheduledEvent from "../../models/ScheduledEvent";
+import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 
 export default async function (guildEvent: GuildScheduledEvent) {
-    await ScheduledEvent.deleteOne({ eventId: guildEvent.id });
+    await ScheduledGuildEvent.deleteOne({ eventId: guildEvent.id });
 }

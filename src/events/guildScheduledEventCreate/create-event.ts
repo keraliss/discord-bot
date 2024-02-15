@@ -1,5 +1,5 @@
 import { GuildScheduledEvent } from "discord.js";
-import ScheduledEvent from "../../models/ScheduledEvent";
+import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 import { SystemEvents, systemEventEmitter } from "../../utils/event-emitter";
 
 export default async function (guildEvent: GuildScheduledEvent) {
@@ -8,7 +8,7 @@ export default async function (guildEvent: GuildScheduledEvent) {
     }
 
     try {
-        await ScheduledEvent.create({
+        await ScheduledGuildEvent.create({
             creatorId: guildEvent.creatorId,
             eventId: guildEvent.id,
             name: guildEvent.name,

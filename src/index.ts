@@ -7,7 +7,7 @@ import apiRoutes from "./routes";
 import dotenv from "dotenv";
 import cors from "cors";
 import { SystemEvents, systemEventEmitter } from "./utils/event-emitter";
-import { setupGuildEventOccurrence } from "./service/setup-guild-event-occurrence";
+import { setupGuildEventRecurrence } from "./service/setup-guild-event-recurrence";
 dotenv.config();
 const app = express();
 app.use(json());
@@ -25,7 +25,8 @@ export const client = new Client({
     ],
 });
 
-systemEventEmitter.on(SystemEvents.GuildEventCreated, setupGuildEventOccurrence);
+systemEventEmitter.on(SystemEvents.GuildEventCreated, setupGuildEventRecurrence);
+systemEventEmitter.on(SystemEvents.GuildEventUpdated, setupGuildEventRecurrence);
 
 configDotenv();
 

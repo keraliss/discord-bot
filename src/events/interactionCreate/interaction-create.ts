@@ -1,5 +1,5 @@
 import { Interaction } from "discord.js";
-import ScheduledEvent from "../../models/ScheduledEvent";
+import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 
 export default async function (interaction: Interaction) {
     if (!interaction.isStringSelectMenu()) return;
@@ -10,7 +10,7 @@ export default async function (interaction: Interaction) {
     if (prefix === "select-recurrence") {
         const selectedRecurrence = interaction.values[0];
         try {
-            await ScheduledEvent.updateOne(
+            await ScheduledGuildEvent.updateOne(
                 { eventId },
                 { recurrence: selectedRecurrence },
             );
