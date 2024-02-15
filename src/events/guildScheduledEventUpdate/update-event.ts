@@ -11,6 +11,11 @@ export default async function (
         {
             name: newGuildEvent.name,
             scheduledStartsAt: new Date(newGuildEvent.scheduledStartTimestamp!),
+            creatorId: newGuildEvent.creatorId,
+            eventId: newGuildEvent.id,
+        },
+        {
+            upsert: true,
         },
     );
 

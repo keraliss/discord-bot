@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { GuildEventRecurrence } from "../utils/constants";
 
-const scheduledGuildEventSchema = new mongoose.Schema(
+const scheduledEventSchema = new mongoose.Schema(
     {
         eventId: {
             type: String,
@@ -21,8 +22,8 @@ const scheduledGuildEventSchema = new mongoose.Schema(
         recurrence: {
             type: String,
             required: true,
-            enum: ["daily", "weekly", "monthly", "none"],
-            default: "none",
+            enum: Object.values(GuildEventRecurrence),
+            default: GuildEventRecurrence.None,
         },
     },
     { timestamps: true },
@@ -30,6 +31,6 @@ const scheduledGuildEventSchema = new mongoose.Schema(
 
 const ScheduledGuildEvent = mongoose.model(
     "ScheduledGuildEvent",
-    scheduledGuildEventSchema,
+    scheduledEventSchema,
 );
 export default ScheduledGuildEvent;

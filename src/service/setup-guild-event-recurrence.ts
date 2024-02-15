@@ -1,5 +1,6 @@
 import { client } from "..";
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import { GuildEventRecurrence } from "../utils/constants";
 
 export async function setupGuildEventRecurrence({
     eventId,
@@ -11,29 +12,22 @@ export async function setupGuildEventRecurrence({
         const user = await client.users.fetch(creatorId);
         const channel = await user.createDM();
 
+        const selectMenuBuilder = new StringSelectMenuBuilder()
+            .setCustomId(`select-event-recurrence::${eventId}`)
+            .setPlaceholder("Choose Recurrence");
+
+        const recurrenceOptions = Object.entries(GuildEventRecurrence).map(
+            ([key, value]) => ({
+                label: key,
+                value: value,
+            }),
+        );
+
+        selectMenuBuilder.addOptions(recurrenceOptions);
+
         const selectMenu =
             new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-                new StringSelectMenuBuilder()
-                    .setCustomId(`select-recurrence::${eventId}`)
-                    .setPlaceholder("Choose Recurrence")
-                    .addOptions([
-                        {
-                            label: "Daily",
-                            value: "daily",
-                        },
-                        {
-                            label: "Weekly",
-                            value: "weekly",
-                        },
-                        {
-                            label: "Monthly",
-                            value: "monthly",
-                        },
-                        {
-                            label: "None",
-                            value: "none",
-                        },
-                    ]),
+                selectMenuBuilder,
             );
 
         const messageContent = isUpdatedEvent
