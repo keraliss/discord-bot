@@ -4,6 +4,6 @@ export const GuildEventRecurrence = {
     "Every other week": "bi-weekly",
     Monthly: "monthly",
     Annually: "annually",
-    "Does not repeat": "none",
     "Monday to Friday": "weekdays",
+    "Does not repeat": "none",
 };
