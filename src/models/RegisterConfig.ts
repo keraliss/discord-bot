@@ -5,7 +5,7 @@ const registerConfigSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            default: "",
+            required: true,
         },
         token: {
             type: String,
@@ -23,35 +23,29 @@ const registerConfigSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        describeYourself: {
+            type: String,
+            default: "",
+        },
         background: {
             type: String,
             default: "",
         },
-        work: {
+        github: {
             type: String,
             default: "",
         },
+        skills: { type: [String], default: [] },
         year: {
             type: String,
             default: "",
         },
-        readMB: {
-            type: String,
-            default: "",
-        },
+        books: { type: [String], default: [] },
         why: {
             type: String,
             default: "",
         },
-        expectation: {
-            type: String,
-            default: "",
-        },
         time: {
-            type: String,
-            default: "",
-        },
-        bitcoinCrypto: {
             type: String,
             default: "",
         },
