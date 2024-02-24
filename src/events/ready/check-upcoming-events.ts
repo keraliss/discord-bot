@@ -1,13 +1,15 @@
-import { Client } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client } from "discord.js";
 import ScheduledGuildEvent, {
     calculateNextOccurrence,
 } from "../../models/ScheduledGuildEvent";
 import { GuildEventRecurrence } from "../../utils/constants";
 
+const FIVE_MINUTES_IN_MS = 60000 * 1;
+
 export default function scheduleEventReminders(client: Client) {
     checkForUpcomingEvents();
 
-    setInterval(checkForUpcomingEvents, 60000 * 5);
+    setInterval(checkForUpcomingEvents, FIVE_MINUTES_IN_MS);
 
     async function checkForUpcomingEvents() {
         try {
@@ -28,9 +30,21 @@ export default function scheduleEventReminders(client: Client) {
                         const minutesUntilEvent = Math.round(msUntilEvent / 60000);
 
                         const creator = await client.users.fetch(event.creatorId);
-                        await creator.send(
-                            `Reminder: Your event "${event.name}" is starting in ${minutesUntilEvent} minute(s).`,
-                        );
+
+                        const openLinkModalButton = new ButtonBuilder()
+                            .setCustomId(`open-link-modal::${event.eventId}`)
+                            .setLabel("Provide Event Link")
+                            .setStyle(ButtonStyle.Primary);
+
+                        const row =
+                            new ActionRowBuilder<ButtonBuilder>().addComponents(
+                                openLinkModalButton,
+                            );
+
+                        await creator.send({
+                            content: `Reminder: Your event "${event.name}" is starting in ${minutesUntilEvent} minute(s). Please provide the event link by clicking the button below.`,
+                            components: [row],
+                        });
 
                         await ScheduledGuildEvent.updateOne(
                             { _id: event._id },

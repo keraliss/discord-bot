@@ -32,6 +32,15 @@ const scheduledEventSchema = new mongoose.Schema(
         lastReminderSent: {
             type: Date,
         },
+        customLink: {
+            type: String,
+        },
+        targetChannelId: {
+            type: String,
+        },
+        notifiedToServer: {
+            type: Boolean,
+        },
     },
     { timestamps: true },
 );
