@@ -1,12 +1,14 @@
 import { client } from "..";
 import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
 import { GuildEventRecurrence } from "../utils/constants";
+import { setupGuildEventChannel } from "./setup-guild-event-channel";
 
 export async function setupGuildEventRecurrence({
     eventId,
     eventName,
     creatorId,
     isUpdatedEvent = false,
+    guildId,
 }) {
     try {
         const user = await client.users.fetch(creatorId);
@@ -39,6 +41,8 @@ export async function setupGuildEventRecurrence({
             content: messageContent,
             components: [selectMenu],
         });
+
+        setupGuildEventChannel({ eventId, guildId });
     } catch (error) {
         console.error("Failed to send recurrence setup message:", error);
     }

@@ -24,5 +24,6 @@ export default async function (
         eventName: newGuildEvent.name,
         creatorId: newGuildEvent.creatorId,
         isUpdatedEvent: true,
+        guildId: newGuildEvent.guildId,
     });
 }

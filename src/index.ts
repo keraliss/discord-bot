@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { SystemEvents, systemEventEmitter } from "./utils/event-emitter";
 import { setupGuildEventRecurrence } from "./service/setup-guild-event-recurrence";
-import { setupGuildEventChannel } from "./service/setup-guild-event-channel";
 dotenv.config();
 const app = express();
 app.use(json());
@@ -28,10 +27,6 @@ export const client = new Client({
 
 systemEventEmitter.on(SystemEvents.GuildEventCreated, setupGuildEventRecurrence);
 systemEventEmitter.on(SystemEvents.GuildEventUpdated, setupGuildEventRecurrence);
-systemEventEmitter.on(
-    SystemEvents.GuildEventRecurrenceUpdated,
-    setupGuildEventChannel,
-);
 
 configDotenv();
 

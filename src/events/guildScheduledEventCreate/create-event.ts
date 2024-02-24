@@ -19,6 +19,8 @@ export default async function (guildEvent: GuildScheduledEvent) {
             eventId: guildEvent.id,
             eventName: guildEvent.name,
             creatorId: guildEvent.creatorId,
+            isUpdatedEvent: false,
+            guildId: guildEvent.guildId,
         });
     } catch (e) {
         console.error(e);
