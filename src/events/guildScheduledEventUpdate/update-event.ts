@@ -19,11 +19,5 @@ export default async function (
         },
     );
 
-    systemEventEmitter.emit(SystemEvents.GuildEventUpdated, {
-        eventId: newGuildEvent.id,
-        eventName: newGuildEvent.name,
-        creatorId: newGuildEvent.creatorId,
-        isUpdatedEvent: true,
-        guildId: newGuildEvent.guildId,
-    });
+    systemEventEmitter.emit(SystemEvents.GuildEventUpdated, newGuildEvent, true);
 }

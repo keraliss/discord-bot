@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 
 const FIFTEEN_MINUTES_IN_MS = 60000 * 15;
-const FIVE_MINUTES_IN_MS = 60000 * 1;
+const FIVE_MINUTES_IN_MS = 60000 * 5;
 
 export default function notifyServerOfEvent(client: Client) {
     checkForUpcomingEvents();

@@ -1,21 +1,21 @@
 import { client } from "..";
-import { ActionRowBuilder, StringSelectMenuBuilder } from "discord.js";
+import {
+    ActionRowBuilder,
+    GuildScheduledEvent,
+    StringSelectMenuBuilder,
+} from "discord.js";
 import { GuildEventRecurrence } from "../utils/constants";
-import { setupGuildEventChannel } from "./setup-guild-event-channel";
 
-export async function setupGuildEventRecurrence({
-    eventId,
-    eventName,
-    creatorId,
-    isUpdatedEvent = false,
-    guildId,
-}) {
+export async function setupGuildEventRecurrence(
+    guildEvent: GuildScheduledEvent,
+    isUpdatedEvent: boolean,
+) {
     try {
-        const user = await client.users.fetch(creatorId);
+        const user = await client.users.fetch(guildEvent.creatorId);
         const channel = await user.createDM();
 
         const selectMenuBuilder = new StringSelectMenuBuilder()
-            .setCustomId(`select-event-recurrence::${eventId}`)
+            .setCustomId(`select-event-recurrence::${guildEvent.id}`)
             .setPlaceholder("Choose Recurrence");
 
         const recurrenceOptions = Object.entries(GuildEventRecurrence).map(
@@ -33,16 +33,14 @@ export async function setupGuildEventRecurrence({
             );
 
         const messageContent = isUpdatedEvent
-            ? `You have updated the event: "${eventName}". Do you want to update its recurrence? Ignore if not applicable.\n`
-            : `You have created a new event: "${eventName}".\n` +
+            ? `You have updated the event: "${guildEvent.name}". Do you want to update its recurrence? Ignore if not applicable.\n`
+            : `You have created a new event: "${guildEvent.name}".\n` +
               "How often does this event repeat?";
 
         await channel.send({
             content: messageContent,
             components: [selectMenu],
         });
-
-        setupGuildEventChannel({ eventId, guildId });
     } catch (error) {
         console.error("Failed to send recurrence setup message:", error);
     }

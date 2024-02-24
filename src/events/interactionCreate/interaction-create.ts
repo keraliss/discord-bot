@@ -35,7 +35,8 @@ export default async function (interaction: Interaction) {
                     ephemeral: true,
                 });
             }
-        } else if (prefix === "update-event-select") {
+        }
+        if (prefix === "update-event-select") {
             const selectedEventId = interaction.values[0];
 
             const event = await ScheduledGuildEvent.findOne({
@@ -71,6 +72,38 @@ export default async function (interaction: Interaction) {
                 content: "Please choose a new recurrence for the event:",
                 components: [row],
             });
+        }
+        if (prefix === "select-target-channel") {
+            const eventId = customId.split("::")[1];
+            const selectedChannelId = interaction.values[0];
+
+            try {
+                const event = await ScheduledGuildEvent.findOne({
+                    eventId: eventId,
+                });
+                if (!event) {
+                    await interaction.reply({
+                        content: "Event not found.",
+                        ephemeral: true,
+                    });
+                    return;
+                }
+
+                event.targetChannelId = selectedChannelId;
+                await event.save();
+
+                await interaction.reply({
+                    content: `Target channel for event "${event.name}" has been updated successfully.`,
+                    ephemeral: true,
+                });
+            } catch (error) {
+                console.error("Failed to update target channel for event:", error);
+                await interaction.reply({
+                    content:
+                        "Failed to update the target channel. Please try again later.",
+                    ephemeral: true,
+                });
+            }
         }
     }
 

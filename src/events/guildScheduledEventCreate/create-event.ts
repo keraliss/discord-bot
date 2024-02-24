@@ -15,13 +15,7 @@ export default async function (guildEvent: GuildScheduledEvent) {
             scheduledStartsAt: new Date(guildEvent.scheduledStartTimestamp),
         });
 
-        systemEventEmitter.emit(SystemEvents.GuildEventCreated, {
-            eventId: guildEvent.id,
-            eventName: guildEvent.name,
-            creatorId: guildEvent.creatorId,
-            isUpdatedEvent: false,
-            guildId: guildEvent.guildId,
-        });
+        systemEventEmitter.emit(SystemEvents.GuildEventCreated, guildEvent);
     } catch (e) {
         console.error(e);
     }
