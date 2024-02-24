@@ -17,18 +17,26 @@ export default function scheduleEventReminders(client: Client) {
                     $lte: new Date(now.getTime() + 30 * 60000), // within the next 30 minutes
                     $gt: now, // not already started
                 },
+                lastReminderSent: null,
             });
 
             upcomingEvents.forEach(async (event) => {
                 try {
-                    const msUntilEvent =
-                        event.nextOccurrence.getTime() - now.getTime();
-                    const minutesUntilEvent = Math.round(msUntilEvent / 60000);
+                    if (!event.lastReminderSent) {
+                        const msUntilEvent =
+                            event.nextOccurrence.getTime() - now.getTime();
+                        const minutesUntilEvent = Math.round(msUntilEvent / 60000);
 
-                    const creator = await client.users.fetch(event.creatorId);
-                    await creator.send(
-                        `Reminder: Your event "${event.name}" is starting in ${minutesUntilEvent} minute(s).`,
-                    );
+                        const creator = await client.users.fetch(event.creatorId);
+                        await creator.send(
+                            `Reminder: Your event "${event.name}" is starting in ${minutesUntilEvent} minute(s).`,
+                        );
+
+                        await ScheduledGuildEvent.updateOne(
+                            { _id: event._id },
+                            { $set: { lastReminderSent: now } },
+                        );
+                    }
                 } catch (error) {
                     console.error(
                         `Failed to send reminder for event "${event.name}":`,
@@ -36,37 +44,15 @@ export default function scheduleEventReminders(client: Client) {
                     );
                 }
 
-                // const targetGuild =
-                //     client.guilds.cache.get(event.guildId) ||
-                //     (await client.guilds.fetch(event.guildId).catch(console.error));
-                // if (!targetGuild) return;
-                //
-                // const targetChannel =
-                //     (targetGuild.channels.cache.get(
-                //         event.notificationChannelId,
-                //     ) as TextChannel) ||
-                //     ((await targetGuild.channels
-                //         .fetch(event.notificationChannelId)
-                //         .catch(console.error)) as TextChannel);
-                // if (!targetChannel || !targetChannel.isText()) return;
-                //
-                // targetChannel.send(
-                //     `Reminder: Event "${event.name}" is starting soon.`,
-                // );
-
                 if (event.recurrence != GuildEventRecurrence["Does not repeat"]) {
                     const nextOccurrence = calculateNextOccurrence(
                         event.scheduledStartsAt,
                         event.recurrence as keyof typeof GuildEventRecurrence,
                     );
 
-                    ScheduledGuildEvent.updateOne(
-                        {
-                            eventId: event.eventId,
-                        },
-                        {
-                            nextOccurrence,
-                        },
+                    await ScheduledGuildEvent.updateOne(
+                        { _id: event._id },
+                        { nextOccurrence, $unset: { lastReminderSent: "" } },
                     );
                 }
             });

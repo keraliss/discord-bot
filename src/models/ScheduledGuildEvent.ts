@@ -29,6 +29,9 @@ const scheduledEventSchema = new mongoose.Schema(
             type: Date,
             // required: true,
         },
+        lastReminderSent: {
+            type: Date,
+        },
     },
     { timestamps: true },
 );
