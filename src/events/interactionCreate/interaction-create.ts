@@ -41,6 +41,7 @@ export default async function (interaction: Interaction) {
 
             const event = await ScheduledGuildEvent.findOne({
                 eventId: selectedEventId,
+                deletedAt: null,
             });
             if (!event) {
                 await interaction.reply({
@@ -80,6 +81,7 @@ export default async function (interaction: Interaction) {
             try {
                 const event = await ScheduledGuildEvent.findOne({
                     eventId: eventId,
+                    deletedAt: null,
                 });
                 if (!event) {
                     await interaction.reply({

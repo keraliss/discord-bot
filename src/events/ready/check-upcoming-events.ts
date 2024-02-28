@@ -20,6 +20,7 @@ export default function scheduleEventReminders(client: Client) {
                     $gt: now, // not already started
                 },
                 lastReminderSent: null,
+                deletedAt: null,
             });
 
             upcomingEvents.forEach(async (event) => {

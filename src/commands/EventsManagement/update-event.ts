@@ -9,7 +9,7 @@ import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 export async function run({ interaction }: SlashCommandProps) {
     await interaction.deferReply({ ephemeral: true });
 
-    const events = await ScheduledGuildEvent.find({});
+    const events = await ScheduledGuildEvent.find({ deletedAt: null });
 
     if (events.length === 0) {
         await interaction.followUp("There are no scheduled events to update.");

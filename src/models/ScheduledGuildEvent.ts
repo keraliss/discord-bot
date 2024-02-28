@@ -41,6 +41,9 @@ const scheduledEventSchema = new mongoose.Schema(
         notifiedToServer: {
             type: Boolean,
         },
+        deletedAt: {
+            type: Date,
+        },
     },
     { timestamps: true },
 );

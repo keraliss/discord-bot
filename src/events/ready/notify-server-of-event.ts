@@ -18,6 +18,7 @@ export default function notifyServerOfEvent(client: Client) {
                     $gt: now,
                 },
                 notifiedToServer: { $ne: true },
+                deletedAt: null,
             });
 
             upcomingEvents.forEach(async (event) => {

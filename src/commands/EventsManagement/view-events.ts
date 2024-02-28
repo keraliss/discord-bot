@@ -6,7 +6,7 @@ export async function run({ interaction }: SlashCommandProps) {
     try {
         await interaction.deferReply({ ephemeral: true });
 
-        const events = await ScheduledGuildEvent.find({});
+        const events = await ScheduledGuildEvent.find({ deletedAt: null });
 
         if (events.length === 0) {
             await interaction.followUp(

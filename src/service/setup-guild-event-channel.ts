@@ -14,6 +14,7 @@ export async function setupGuildEventChannel(
     try {
         const event = await ScheduledGuildEvent.findOne({
             eventId: guildEvent.id,
+            deletedAt: null,
         });
         if (!event) throw new Error("Event not found");
 
