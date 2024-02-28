@@ -50,7 +50,7 @@ export async function run({ interaction }: SlashCommandProps) {
                 });
         }
     } catch (error) {
-        console.log(`Error in ${__filename}:\n`, error);
+        console.error(`Error in ${__filename}:\n`, error);
     }
 }
 

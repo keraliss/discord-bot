@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, PermissionFlagsBits, ChannelType } from "discord.js";
 import NotificationConfig from "../../models/NotificationConfig";
-import { SlashCommandProps } from 'commandkit';
+import { SlashCommandProps } from "commandkit";
 
-export async function run({ interaction }: SlashCommandProps):Promise<void> {
+export async function run({ interaction }: SlashCommandProps): Promise<void> {
     try {
         await interaction.deferReply({ ephemeral: true });
         const targetYtChannelId = interaction.options.getString("youtube-id");
@@ -29,7 +29,7 @@ export async function run({ interaction }: SlashCommandProps):Promise<void> {
                 );
             });
     } catch (error) {
-        console.log(`Error in ${__filename}:\n`, error);
+        console.error(`Error in ${__filename}:\n`, error);
     }
 }
 

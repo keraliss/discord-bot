@@ -59,6 +59,7 @@ const registerConfigSchema = new mongoose.Schema(
 
 registerConfigSchema.post("save", async function (doc, next) {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await email.sendMail({
             from: process.env.GMAIL_EMAIL,
             to: doc.email || process.env.GMAIL_EMAIL,
@@ -113,7 +114,7 @@ registerConfigSchema.post("save", async function (doc, next) {
                 `,
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
     next();
 });

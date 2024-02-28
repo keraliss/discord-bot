@@ -1,15 +1,22 @@
 import { GuildScheduledEvent } from "discord.js";
-import ScheduledEvent from "../../models/ScheduledEvent";
+import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
+import { SystemEvents, systemEventEmitter } from "../../utils/event-emitter";
 
-export default async function (event: GuildScheduledEvent) {
-    if (!event.scheduledStartTimestamp) {
+export default async function (guildEvent: GuildScheduledEvent) {
+    if (!guildEvent.scheduledStartTimestamp) {
         return; // Don't need to do anything with events that start immediately
     }
 
-    await ScheduledEvent.create({
-        creatorId: event.creatorId,
-        eventId: event.id,
-        name: event.name,
-        scheduledStartsAt: new Date(event.scheduledStartTimestamp),
-    });
-};
+    try {
+        await ScheduledGuildEvent.create({
+            creatorId: guildEvent.creatorId,
+            eventId: guildEvent.id,
+            name: guildEvent.name,
+            scheduledStartsAt: new Date(guildEvent.scheduledStartTimestamp),
+        });
+
+        systemEventEmitter.emit(SystemEvents.GuildEventCreated, guildEvent);
+    } catch (e) {
+        console.error(e);
+    }
+}

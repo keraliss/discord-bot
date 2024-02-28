@@ -11,10 +11,11 @@ export default function (client: Client) {
             const notificationConfigs = await NotificationConfig.find();
             notificationConfigs.map(async (notificationConfig) => {
                 const YOUTUBE_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${notificationConfig.ytChannelId}`;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const feed: any = await parser
                     .parseURL(YOUTUBE_RSS_URL)
                     .catch((error) => {
-                        console.log(error);
+                        console.error(error);
                     });
                 if (!feed?.items.length) {
                     return;
@@ -69,7 +70,7 @@ export default function (client: Client) {
                 }
             });
         } catch (error) {
-            console.log(`Error in ${__filename}:\n`, error);
+            console.error(`Error in ${__filename}:\n`, error);
         }
     }
 }

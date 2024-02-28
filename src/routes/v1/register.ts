@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
         if (req.body["books"]) {
             req.body["books"] = JSON.parse(req.body["books"]);
         }
-        let email = req.body.email;
+        const email = req.body.email;
         const user = await RegisterConfig.findOne({ email });
         if (user) {
             console.log("User already exists");
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
             res.json({ message: "User added successfully" });
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.json({ message: "Error" });
     }
 });

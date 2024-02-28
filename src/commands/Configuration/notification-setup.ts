@@ -1,7 +1,12 @@
-import { SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder } from "discord.js";
+import {
+    SlashCommandBuilder,
+    PermissionFlagsBits,
+    ChannelType,
+    EmbedBuilder,
+} from "discord.js";
 import NotificationConfig from "../../models/NotificationConfig";
 import Parser from "rss-parser";
-import { SlashCommandProps } from 'commandkit';
+import { SlashCommandProps } from "commandkit";
 
 const parser = new Parser();
 
@@ -42,7 +47,9 @@ export async function run({ interaction }: SlashCommandProps): Promise<void> {
 
         if (feed.items.length) {
             const latestVideo = feed.items[0];
-            const pubDate = latestVideo.pubDate ? new Date(latestVideo.pubDate) : new Date();
+            const pubDate = latestVideo.pubDate
+                ? new Date(latestVideo.pubDate)
+                : new Date();
 
             notificationConfig.lastCheckedVid = {
                 id: latestVideo.id.split(":")[2],
@@ -66,7 +73,7 @@ export async function run({ interaction }: SlashCommandProps): Promise<void> {
                 );
             });
     } catch (error) {
-        console.log(`Error in ${__filename}:\n`, error);
+        console.error(`Error in ${__filename}:\n`, error);
     }
 }
 
