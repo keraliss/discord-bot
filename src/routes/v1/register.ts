@@ -7,12 +7,12 @@ const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         const token = randomUUID();
-        if (req.body["skills"]) {
-            req.body["skills"] = JSON.parse(req.body["skills"]);
-        }
-        if (req.body["books"]) {
-            req.body["books"] = JSON.parse(req.body["books"]);
-        }
+        // if (req.body["skills"]) {
+        //     req.body["skills"] = JSON.parse(req.body["skills"]);
+        // }
+        // if (req.body["books"]) {
+        //     req.body["books"] = JSON.parse(req.body["books"]);
+        // }
         let email = req.body.email;
         const user = await RegisterConfig.findOne({ email });
         if (user) {
