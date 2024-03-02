@@ -7,19 +7,15 @@ const router = express.Router();
 router.post("/", async (req, res) => {
     try {
         const token = randomUUID();
-        // if (req.body["skills"]) {
-        //     req.body["skills"] = JSON.parse(req.body["skills"]);
-        // }
-        // if (req.body["books"]) {
-        //     req.body["books"] = JSON.parse(req.body["books"]);
-        // }
         const email = req.body.email;
-        const user = await RegisterConfig.findOne({ email });
+        const version = new Date().getFullYear();
+        const role = req.body.role;
+        const user = await RegisterConfig.findOne({ email, version, role });
         if (user) {
             console.log("User already exists");
             res.json({ message: "User already present" });
         } else {
-            const newUser = new RegisterConfig({ ...req.body, token });
+            const newUser = new RegisterConfig({ ...req.body, token, version });
             newUser
                 .save()
                 .then((savedUser) => {

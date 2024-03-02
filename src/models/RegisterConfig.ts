@@ -53,6 +53,10 @@ const registerConfigSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
+        version: {
+            type: String,
+            required: true,
+        },
     },
     { timestamps: true },
 );
