@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import ScheduledGuildEvent from "../../models/ScheduledGuildEvent";
 
-const FIFTEEN_MINUTES_IN_MS = 60000 * 15;
+const THIRTY_MINUTES_IN_MS = 60000 * 30;
 const FIVE_MINUTES_IN_MS = 60000 * 5;
 
 export default function notifyServerOfEvent(client: Client) {
@@ -14,7 +14,7 @@ export default function notifyServerOfEvent(client: Client) {
             const now = new Date();
             const upcomingEvents = await ScheduledGuildEvent.find({
                 nextOccurrence: {
-                    $lte: new Date(now.getTime() + FIFTEEN_MINUTES_IN_MS),
+                    $lte: new Date(now.getTime() + THIRTY_MINUTES_IN_MS),
                     $gt: now,
                 },
                 notifiedToServer: { $ne: true },
@@ -46,13 +46,14 @@ export default function notifyServerOfEvent(client: Client) {
 
                     const discordEventUrl = `https://discord.gg/events/${event.guildId}/${event.eventId}`;
 
-                    const messageContent =
-                        `Hey all, the event "${event.name}" is starting in ${minutesUntilEvent} minute(s)! \n\n${discordEventUrl}` +
-                        `${
-                            event.customLink
-                                ? `\nHere's the link to join: ${event.customLink}`
-                                : ""
-                        }`;
+                    const messageContent = event.description
+                        ? event.description
+                        : `Hey all, the event "${event.name}" is starting in ${minutesUntilEvent} minute(s)! \n\n${discordEventUrl}` +
+                          `${
+                              event.customLink
+                                  ? `\nHere's the link to join: ${event.customLink}`
+                                  : ""
+                          }`;
 
                     await targetChannel.send(messageContent);
 

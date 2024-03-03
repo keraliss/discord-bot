@@ -19,6 +19,9 @@ const scheduledEventSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        description: {
+            type: String,
+        },
         scheduledStartsAt: {
             type: Date,
             required: true,
@@ -32,9 +35,6 @@ const scheduledEventSchema = new mongoose.Schema(
         nextOccurrence: {
             type: Date,
             // required: true,
-        },
-        lastReminderSent: {
-            type: Date,
         },
         customLink: {
             type: String,
