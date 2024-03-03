@@ -43,8 +43,11 @@ export default function notifyServerOfEvent(client: Client) {
                     const minutesUntilEvent = Math.round(
                         (event.nextOccurrence.getTime() - now.getTime()) / 60000,
                     );
+
+                    const discordEventUrl = `https://discord.gg/events/${event.guildId}/${event.eventId}`;
+
                     const messageContent =
-                        `Hey all, the event "${event.name}" is starting in ${minutesUntilEvent} minute(s)!` +
+                        `Hey all, the event "${event.name}" is starting in ${minutesUntilEvent} minute(s)! \n\n${discordEventUrl}` +
                         `${
                             event.customLink
                                 ? `\nHere's the link to join: ${event.customLink}`

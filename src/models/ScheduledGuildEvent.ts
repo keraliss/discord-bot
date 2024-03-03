@@ -11,6 +11,10 @@ const scheduledEventSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        guildId: {
+            type: String,
+            required: true,
+        },
         name: {
             type: String,
             required: true,

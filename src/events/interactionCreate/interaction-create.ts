@@ -52,7 +52,7 @@ export default async function (interaction: Interaction) {
             }
 
             const recurrenceSelectMenu = new StringSelectMenuBuilder()
-                .setCustomId(`select-event-recurrence::${selectedEventId}`) // Reuse or adjust as necessary
+                .setCustomId(`select-event-recurrence::${selectedEventId}`)
                 .setPlaceholder("Select New Recurrence");
 
             const recurrenceOptions = Object.entries(GuildEventRecurrence).map(

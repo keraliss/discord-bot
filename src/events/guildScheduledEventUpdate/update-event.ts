@@ -9,10 +9,11 @@ export default async function (
     await ScheduledGuildEvent.findOneAndUpdate(
         { eventId: newGuildEvent.id },
         {
-            name: newGuildEvent.name,
-            scheduledStartsAt: new Date(newGuildEvent.scheduledStartTimestamp!),
-            creatorId: newGuildEvent.creatorId,
             eventId: newGuildEvent.id,
+            creatorId: newGuildEvent.creatorId,
+            name: newGuildEvent.name,
+            guildId: newGuildEvent.guildId,
+            scheduledStartsAt: new Date(newGuildEvent.scheduledStartTimestamp!),
         },
         {
             upsert: true,
