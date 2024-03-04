@@ -44,7 +44,7 @@ export default function notifyServerOfEvent(client: Client) {
                         (event.nextOccurrence.getTime() - now.getTime()) / 60000,
                     );
 
-                    const discordEventUrl = `https://discord.gg/events/${event.guildId}/${event.eventId}`;
+                    const discordEventUrl = `<https://discord.gg/events/${event.guildId}/${event.eventId}>`;
 
                     const messageContent = event.description
                         ? `${event.description} \n\n${discordEventUrl}`

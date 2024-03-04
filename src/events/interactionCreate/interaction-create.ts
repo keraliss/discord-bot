@@ -165,7 +165,7 @@ export default async function (interaction: Interaction) {
 
             await interaction.reply({
                 content:
-                    "The event link has been successfully updated! The bot will post the link on the server 15 minutes before the event starts.",
+                    "The event link has been successfully updated! The bot will post the link on the server 30 minutes before the event starts.",
                 ephemeral: true,
             });
         } catch (error) {
