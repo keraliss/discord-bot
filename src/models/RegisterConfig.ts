@@ -69,8 +69,8 @@ registerConfigSchema.post("save", async function (doc, next) {
             to: doc.email || process.env.GMAIL_EMAIL,
             subject: "Welcome to Bitshala cohort",
             html:
-                `<!DOCTYPE html>
-                    <html>
+                `<!doctype html>
+                <html>
                     <head>
                         <title>Welcome to the Cohort</title>
                         <style type="text/css">
@@ -89,9 +89,10 @@ registerConfigSchema.post("save", async function (doc, next) {
                                 text-align: center;
                             }
                             .button {
+                                text-decoration: none;
                                 display: inline-block;
                                 padding: 10px 20px;
-                                margin-top: 20px;
+                                margin-top: 5px;
                                 background-color: #7289da;
                                 color: #ffffff;
                                 text-decoration: none;
@@ -103,18 +104,34 @@ registerConfigSchema.post("save", async function (doc, next) {
                         <div class="container">
                             <h1>Congratulations ` +
                 `${doc.name},` +
-                `on Joining the Cohort!</h1>
-                            <p>Welcome! We're thrilled to have you on board. You are now a part of a community of enthusiastic learners and professionals.</p>
-                            <p>To get started, join our Discord server where you can meet fellow cohort members and stay updated:</p>
-                            <a href="https://discord.gg/w6Fb4r4z" class="button">Join Our Discord Server</a>
-                            <p>Use the following token when you join:</p>
-                            <div class="token">` +
+                `on Joining the ` +
+                `${doc.role}` +
+                ` Cohort!</h1>
+                            <p>
+                                Welcome! We're thrilled to have you onboard. Come hangout with other Bitcoiners and Developers in Bitshala Discord.
+                            </p>
+                            <p>
+                                To get started, follow the instructions:
+                            </p>
+                            <p>
+                                Join our Discord and use the command <strong>/register ` +
                 `${doc.token}` +
-                `</div>
-                            <p>Once you join, use the command <strong>/register</strong> to complete your registration.</p>
+                `</strong> to join ` +
+                `${doc.role}` +
+                ` channel.
+                            </p>
+                            <p>
+                                Give a brief introduction in the <strong>intro</strong> channel.
+                            </p>
+                            <p>
+                                Stay tuned in the Discord for further updates.
+                            </p>
+                            <a href="https://discord.gg/w6Fb4r4z" class="button"
+                                >Join Our Discord Server</a
+                            >
                         </div>
                     </body>
-                    </html>
+                </html>
                 `,
         });
     } catch (error) {
