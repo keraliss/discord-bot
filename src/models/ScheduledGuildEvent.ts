@@ -28,13 +28,14 @@ const scheduledEventSchema = new mongoose.Schema(
         },
         recurrence: {
             type: String,
-            // required: true,
             enum: Object.values(GuildEventRecurrence),
             default: GuildEventRecurrence["Does not repeat"],
         },
         nextOccurrence: {
             type: Date,
-            // required: true,
+        },
+        lastReminderSentAt: {
+            type: Date,
         },
         customLink: {
             type: String,
