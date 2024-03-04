@@ -47,7 +47,7 @@ export default function notifyServerOfEvent(client: Client) {
                     const discordEventUrl = `https://discord.gg/events/${event.guildId}/${event.eventId}`;
 
                     const messageContent = event.description
-                        ? event.description
+                        ? `${event.description} \n\n${discordEventUrl}`
                         : `Hey all, the event "${event.name}" is starting in ${minutesUntilEvent} minute(s)! \n\n${discordEventUrl}` +
                           `${
                               event.customLink
