@@ -52,7 +52,7 @@ export default async function (interaction: Interaction) {
             }
 
             const recurrenceSelectMenu = new StringSelectMenuBuilder()
-                .setCustomId(`select-event-recurrence::${selectedEventId}`) // Reuse or adjust as necessary
+                .setCustomId(`select-event-recurrence::${selectedEventId}`)
                 .setPlaceholder("Select New Recurrence");
 
             const recurrenceOptions = Object.entries(GuildEventRecurrence).map(
@@ -125,11 +125,24 @@ export default async function (interaction: Interaction) {
             .setStyle(TextInputStyle.Short)
             .setRequired(true);
 
+        const eventDescriptionInput = new TextInputBuilder()
+            .setCustomId("eventDescriptionInput")
+            .setLabel("Event Description")
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(true);
+
         const actionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(
             eventLinkInput,
         );
 
         modal.addComponents(actionRow);
+
+        const descriptionActionRow =
+            new ActionRowBuilder<TextInputBuilder>().addComponents(
+                eventDescriptionInput,
+            );
+
+        modal.addComponents(descriptionActionRow);
 
         await interaction.showModal(modal);
     }
@@ -140,11 +153,14 @@ export default async function (interaction: Interaction) {
     ) {
         const eventId = interaction.customId.split("::")[1];
         const eventLink = interaction.fields.getTextInputValue("eventLinkInput");
+        const eventDescription = interaction.fields.getTextInputValue(
+            "eventDescriptionInput",
+        );
 
         try {
             await ScheduledGuildEvent.updateOne(
                 { eventId: eventId },
-                { $set: { customLink: eventLink } },
+                { $set: { customLink: eventLink, description: eventDescription } },
             );
 
             await interaction.reply({

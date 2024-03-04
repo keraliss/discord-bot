@@ -9,8 +9,9 @@ export default async function (guildEvent: GuildScheduledEvent) {
 
     try {
         await ScheduledGuildEvent.create({
-            creatorId: guildEvent.creatorId,
             eventId: guildEvent.id,
+            creatorId: guildEvent.creatorId,
+            guildId: guildEvent.guildId,
             name: guildEvent.name,
             scheduledStartsAt: new Date(guildEvent.scheduledStartTimestamp),
         });
