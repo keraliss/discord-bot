@@ -57,6 +57,10 @@ const registerConfigSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        cohortName: {
+            type: String,
+            required: true
+        }
     },
     { timestamps: true },
 );
@@ -105,7 +109,7 @@ registerConfigSchema.post("save", async function (doc, next) {
                             <h1>Congratulations ` +
                 `${doc.name},` +
                 `on Joining the ` +
-                `${doc.role}` +
+                `${doc.cohortName}` +
                 ` Cohort!</h1>
                             <p>
                                 Welcome! We're thrilled to have you onboard. Come hangout with other Bitcoiners and Developers in Bitshala Discord.
@@ -117,7 +121,7 @@ registerConfigSchema.post("save", async function (doc, next) {
                                 Join our Discord and use the command <strong>/register ` +
                 `${doc.token}` +
                 `</strong> to join ` +
-                `${doc.role}` +
+                `${doc.cohortName}` +
                 ` channel.
                             </p>
                             <p>
