@@ -9,7 +9,7 @@ export async function run({ interaction }: SlashCommandProps) {
         const user = await RegisterConfig.findOne({ token: token });
         if (!user) {
             interaction.followUp(
-                "Please register to our new cohort [here](https://www.bitshala.org/will-be-back-soon)",
+                "Please register to our new cohort [here](https://bitshala.org/cohorts/)",
             );
             return;
         } else if (user.enrolled) {
@@ -31,6 +31,9 @@ export async function run({ interaction }: SlashCommandProps) {
             const role = roles?.cache.find((r) => r.name === channelPermission);
 
             if (!role) {
+                interaction.followUp(
+                        `Apologies, I couldn't assign the role to you as there is no such role available on the server. Please get in touch with an administrator for assistance.`,
+                    );
                 return;
             }
             member?.roles
