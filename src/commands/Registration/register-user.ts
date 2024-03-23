@@ -32,8 +32,10 @@ export async function run({ interaction }: SlashCommandProps) {
 
             if (!role) {
                 interaction.followUp(
-                        `Apologies, I couldn't assign the role to you as there is no such role available on the server. Please get in touch with an administrator for assistance.`,
-                    );
+                    `Apologies, I couldn't assign the role to you as there is no such role available on the server. Please get in touch with an administrator for assistance.`,
+                );
+                user.enrolled = false;
+                await user.save();
                 return;
             }
             member?.roles
