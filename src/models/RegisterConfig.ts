@@ -59,8 +59,8 @@ const registerConfigSchema = new mongoose.Schema(
         },
         cohortName: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
     { timestamps: true },
 );
@@ -73,70 +73,106 @@ registerConfigSchema.post("save", async function (doc, next) {
             to: doc.email || process.env.GMAIL_EMAIL,
             subject: "Welcome to Bitshala cohort",
             html:
-                `<!doctype html>
-                <html>
+                `<!DOCTYPE html>
+                    <html>
                     <head>
                         <title>Welcome to the Cohort</title>
                         <style type="text/css">
-                            body {
-                                font-family: Arial, sans-serif;
-                                background-color: #f4f4f4;
-                                margin: 0;
-                                padding: 0;
-                            }
-                            .container {
-                                background-color: #ffffff;
-                                margin: 20px auto;
-                                padding: 20px;
-                                max-width: 600px;
-                                border: 1px solid #dddddd;
-                                text-align: center;
-                            }
-                            .button {
-                                text-decoration: none;
-                                display: inline-block;
-                                padding: 10px 20px;
-                                margin-top: 5px;
-                                background-color: #7289da;
-                                color: #ffffff;
-                                text-decoration: none;
-                                border-radius: 5px;
-                            }
+                        body {
+                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                            background-color: #fff2de;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        .container {
+                            background-color: rgb(51, 51, 51);
+                            color: #ffffff;
+                            margin: 20px auto;
+                            padding: 40px;
+                            max-width: 600px;
+                            border-radius: 8px;
+                            text-align: center;
+                        }
+                        span,
+                        strong {
+                            color: rgb(250, 136, 22);
+                        }
+                        p {
+                            font-size: 16px;
+                            line-height: 1.6;
+                        }
+                        .button {
+                            display: inline-block;
+                            padding: 12px 25px;
+                            margin-top: 20px;
+                            background-color: #ffffff;
+                            color: rgb(51, 51, 51);
+                            text-decoration: none;
+                            border-radius: 5px;
+                            font-weight: bold;
+                            transition: background-color 0.15s ease, color 0.15s ease;
+                        }
+                        .button:hover {
+                            background-color: #fa8816;
+                            color: #ffffff;
+                        }
+                        a {
+                            text-decoration: none !important;
+                        }
+                        a span {
+                            color: #fa8816 !important;
+                        }
+                        a span:hover {
+                            color: #ffffff !important;
+                        }
                         </style>
                     </head>
                     <body>
                         <div class="container">
-                            <h1>Congratulations ` +
-                `${doc.name},` +
-                `on Joining the ` +
+                        <h1>
+                            Congratulations <span>` +
+                ` ${doc.name}, ` +
+                `</span> on Joining the
+                            <span> ` +
                 `${doc.cohortName}` +
-                ` Cohort!</h1>
-                            <p>
-                                Welcome! We're thrilled to have you onboard. Come hangout with other Bitcoiners and Developers in Bitshala Discord.
-                            </p>
-                            <p>
-                                To get started, follow the instructions:
-                            </p>
-                            <p>
-                                Join our Discord and use the command <strong>/register ` +
-                `${doc.token}` +
-                `</strong> to join ` +
-                `${doc.cohortName}` +
-                ` channel.
-                            </p>
-                            <p>
-                                Give a brief introduction in the <strong>intro</strong> channel.
-                            </p>
-                            <p>
-                                Stay tuned in the Discord for further updates.
-                            </p>
-                            <a href="https://discord.gg/w6Fb4r4z" class="button"
-                                >Join Our Discord Server</a
+                ` </span> Cohort!
+                        </h1>
+                        <p>
+                            Welcome! We're thrilled to have you onboard. Come hangout with other
+                            Bitcoiners and Developers in Bitshala Discord.
+                        </p>
+                        <p>To get started, follow the instructions:</p>
+                        <p>
+                            Join our
+                            <a href="https://discord.gg/nXeeBHDHrt" style="text-decoration: none"
+                            ><span>Discord</span></a
                             >
+                            and use the command
+                            <strong>/register</strong> followed by the token
+                            <strong>` +
+                ` ${doc.token}` +
+                `</strong>
+                            to join` +
+                ` ${doc.cohortName} ` +
+                `channels.
+                        </p>
+                        <p>
+                            Give a brief introduction in the
+                            <strong
+                            ><a href="https://discord.gg/uW7AsuwaZm"
+                                ><span>intro</span></a
+                            ></strong
+                            >
+                            channel.
+                        </p>
+                        <p>Stay tuned in the Discord for further updates.</p>
+                        <a href="https://discord.gg/nXeeBHDHrt" class="button"
+                            ><span>Join Our Discord Server</span></a
+                        >
                         </div>
                     </body>
-                </html>
-                `,
+                    </html>
+                    `,
         });
     } catch (error) {
         console.error(error);
