@@ -63,7 +63,7 @@ export default function (client: Client) {
                                     ?.replace("{VIDEO_TITLE}", latestVideo.title)
                                     ?.replace("{CHANNEL_URL}", feed.link || "")
                                     ?.replace("{CHANNEL_NAME}", feed.title || "") ||
-                                `@here,New upload by ${feed.title}.\n[${latestVideo.title}](${latestVideo.link}) \nFind more at our [channel](<${feed.link}>)`;
+                                `@everyone, New upload by ${feed.title}.\n[${latestVideo.title}](${latestVideo.link}) \nFind more at our [channel](<${feed.link}>)`;
                             targetChannel.send(targetMessage);
                         })
                         .catch(() => {});
