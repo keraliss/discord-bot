@@ -41,9 +41,26 @@ export async function run({ interaction }: SlashCommandProps) {
             member?.roles
                 .add(role)
                 .then(() => {
-                    interaction.followUp(
-                        `The role ${role.name} has been added to you.`,
-                    );
+                    let cohortName = "";
+                    const separators = ["-", "_"];
+
+                    for (const separator of separators) {
+                        if (role.name.includes(separator)) {
+                            cohortName = role.name
+                                .split(separator)
+                                .map((e, index) =>
+                                    index === 0 ? e.toUpperCase() : e,
+                                )
+                                .join(" ");
+                            break;
+                        }
+                    }
+
+                    if (!cohortName) {
+                        cohortName = role.name.toUpperCase();
+                    }
+                    const followUpText = `Congrats!! You are now registered for ${cohortName}. Please use the #general for further questions related to cohort. And follow #notice-board for all cohort related updates.`;
+                    interaction.followUp(followUpText);
                 })
                 .catch((error) => {
                     console.error(
