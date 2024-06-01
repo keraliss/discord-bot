@@ -69,7 +69,7 @@ registerConfigSchema.post("save", async function (doc, next) {
     try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await email.sendMail({
-            from: process.env.GMAIL_EMAIL,
+            from: `"Bitshala Org" <${process.env.GMAIL_EMAIL}>`,
             to: doc.email || process.env.GMAIL_EMAIL,
             subject: "Welcome to Bitshala cohort",
             html:
