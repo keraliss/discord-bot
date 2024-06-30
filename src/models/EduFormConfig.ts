@@ -26,14 +26,9 @@ const eduFormConfigSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
-        education: {
-            type: String,
-            default: "",
-        },
-        lookingForFullTime: {
-            type: String,
-            default: "",
-        },
+        employmentStatus: { type: [String], default: [] },
+        education: { type: [String], default: [] },
+        lookingForFullTime: { type: [String], default: [] },
         interest: { type: [String], default: [] },
         teachingExperience: {
             type: String,
