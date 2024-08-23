@@ -61,6 +61,10 @@ const registerConfigSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        hearFrom: {
+            type: String,
+            required: true,
+        },
     },
     { timestamps: true },
 );
