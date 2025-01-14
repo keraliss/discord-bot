@@ -144,12 +144,12 @@ emailCampaignSchema.post("save", async function (doc, next) {
    </body>
 </html>`;
 
-            const response = await mailsender.sendMail({
-                from: `"Bitshala Org" <${process.env.GMAIL_EMAIL}>`,
-                to: doc.email,
-                subject: `Welcome to ${doc.cohortName} Cohort`,
-                html: dynamicHtml,
-            });
+            // const response = await mailsender.sendMail({
+            //     from: `"Bitshala Org" <${process.env.GMAIL_EMAIL}>`,
+            //     to: doc.email,
+            //     subject: `Welcome to ${doc.cohortName} Cohort`,
+            //     html: dynamicHtml,
+            // });
         }
     } catch (error) {
         console.error("Email send error:", error);
