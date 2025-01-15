@@ -124,7 +124,7 @@ emailCampaignSchema.post("save", async function (doc, next) {
       <p class="subject">
         Welcome to the Bitshala BOSS Program – Your Journey Begins!
       </p>
-      <p>Hello ${doc.name},</p>
+      <p>Hello ${doc.ghName},</p>
       <p>
         Congratulations on qualifying for the Chaincode BOSS Program under
         Bitshala's guidance! You're part of a special group, who has been
@@ -139,21 +139,22 @@ emailCampaignSchema.post("save", async function (doc, next) {
           every step you take is a stride towards mastering Bitcoin.
         </li>
         <li>
-          <span class="bold">Guidance:</span> You're not alone on this journey.
-          Bitshala will provide guidance through Office Hours, starting 17th
-          January, every Friday from 7:00 to 8:00 PM IST for the next four
-          weeks. (Since most of you are near Indian time zones) This is your
-          chance to clarify doubts without shortcuts – you'd need this skill
-          while developing open source in the real world.
+          <span class="bold">Bitshala Office Hours:</span> You're not alone on this journey.
+          Bitshala will provide guidance through Office Hours, <span class="bold">starting 17th
+          January, every Friday from 7:00 to 8:00 PM IST</span>. 
+          (Since most of you are near Indian time zones) This is your
+          chance to clarify doubts related to the challenges and receive general guidance on the program.
+          You are expect to be proactive in the discussions, asking questions, and sharing your weekly progress. 
+          It's not a classroom, so quitely listening is not encouraged.
         </li>
         <li>
           <span class="bold">Expectations:</span>
           <ul>
-            <li>Tackle challenges within a week.</li>
+            <li>Tackle each challenges within a week of their assignment.</li>
             <li>
               Participate actively in discussions. Your engagement is key—not
               just solving tasks but helping peers, asking questions, and
-              contributing to the community.
+              contributing to the community is a major part of evaluation.
             </li>
             <li>
               Document your code well. Innovative solutions are encouraged;
@@ -168,19 +169,19 @@ emailCampaignSchema.post("save", async function (doc, next) {
           and the receiver.
         </li>
       </ul>
-      <h2>Join Bitshala Discord:</h2>
+      <h2>Register in Bitshala Discord:</h2>
       <p>
         Join our
         <a href="https://discord.gg/nXeeBHDHrt" style="text-decoration: none"
           ><span>Discord</span></a
         >
-        and use the command
-        <strong>/register</strong> followed by the token
+        and visit the <span class="bold">#bot-commands</span> channel and type in the command
+        <strong>/register</strong> followed by your private token
         <strong>` + ` ${doc.token}` + `</strong>
         to join` + ` ${doc.cohortName} ` + `channels.
       </p>
       <div class="centered-button">
-        <a href="https://discord.com/invite/STeQFVEWf9">Join now</a>
+        <a href="https://discord.com/invite/STeQFVEWf9">Join Discord</a>
       </div>
       <p>
         If you face issues in getting added to Chaincode specific channel,
@@ -192,12 +193,12 @@ emailCampaignSchema.post("save", async function (doc, next) {
 </html>
 `;
 
-            // const response = await mailsender.sendMail({
-            //     from: `"Bitshala Org" <${process.env.GMAIL_EMAIL}>`,
-            //     to: doc.email,
-            //     subject: `Welcome to ${doc.cohortName} Cohort`,
-            //     html: dynamicHtml,
-            // });
+            const response = await mailsender.sendMail({
+                from: `"Bitshala Org" <${process.env.GMAIL_EMAIL}>`,
+                to: doc.email,
+                subject: `Welcome to ${doc.cohortName} Cohort`,
+                html: dynamicHtml,
+            });
         }
     } catch (error) {
         console.error("Email send error:", error);
